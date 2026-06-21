@@ -1,0 +1,70 @@
+﻿#include <webots/robot.h>
+#include <webots/position_sensor.h>
+#include <webots/motor.h>
+#include <stdio.h>
+
+#define TIME_STEP 8
+
+
+int main(int argc, char **argv) {
+  wb_robot_init();
+
+  // Sensores de posição dos motores
+  WbDeviceTag SPesquerda = wb_robot_get_device("sensor_posicao_esquerda");
+  WbDeviceTag SPdireita = wb_robot_get_device("sensor_posicao_direita");
+ 
+  // Motores
+  WbDeviceTag roda_esquerda = wb_robot_get_device("roda_esquerda");
+  WbDeviceTag roda_direita = wb_robot_get_device("roda_direita");
+
+  wb_position_sensor_enable(SPesquerda, 100);
+  wb_position_sensor_enable(SPdireita, 100);
+
+  bool status = 0;
+  float DistanciaPrevia = 0;
+
+  while (wb_robot_step(TIME_STEP) != -1) {
+    float SPE_valor = wb_position_sensor_get_value(SPesquerda);
+    float distanciaE =  SPE_valor * 68 / 1000;
+
+    // float SPD_valor = wb_position_sensor_get_value(SPdireita);
+    printf("Distancia: %f | status: %i | Diff: %f | Previous: %f", distanciaE, status, distanciaE - DistanciaPrevia, DistanciaPrevia);
+
+    // Realizar curva no momento desejado
+    switch(status)
+    {
+      case 0:
+        wb_motor_set_position(roda_esquerda, INFINITY);
+        wb_motor_set_velocity(roda_esquerda, 2);
+        wb_motor_set_position(roda_direita, INFINITY);
+        wb_motor_set_velocity(roda_direita, 2);
+
+        if (distanciaE - DistanciaPrevia > 1)
+        {
+          status = !status;
+          DistanciaPrevia = distanciaE;
+        }
+        break;
+
+      case 1:
+        wb_motor_set_position(roda_esquerda, INFINITY);
+        wb_motor_set_velocity(roda_esquerda, 2);
+        wb_motor_set_position(roda_direita, INFINITY);
+        wb_motor_set_velocity(roda_direita, -2);
+
+        if (distanciaE - DistanciaPrevia > 0.300)
+        {
+          status = !status;
+          DistanciaPrevia = distanciaE;
+        }
+        break;
+    }
+
+
+    printf("\n");
+  };
+
+  wb_robot_cleanup();
+
+  return 0;
+}

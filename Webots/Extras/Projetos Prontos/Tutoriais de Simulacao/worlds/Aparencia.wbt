@@ -1,0 +1,148 @@
+#VRML_SIM R2020a utf8
+WorldInfo {
+  basicTimeStep 16
+}
+Viewpoint {
+  orientation 0.21783656588025713 -0.958058694282033 -0.18620088312385227 5.717514249017402
+  position 0.7361996393944612 0.32451723944053 1.4667585370614922
+}
+TexturedBackground {
+}
+TexturedBackgroundLight {
+}
+Floor {
+  size 1 1
+}
+WoodenBox {
+  translation 0.243932 0.05 -0.0632756
+  name "wooden box(2)"
+  size 0.1 0.1 0.1
+}
+WoodenBox {
+  translation -0.25093 0.05 0.278239
+  name "wooden box(3)"
+  size 0.1 0.1 0.1
+}
+WoodenBox {
+  translation 0.344221 0.05 0.299391
+  rotation 0 1 0 1.37008
+  name "wooden box(1)"
+  size 0.1 0.1 0.1
+}
+E-puck {
+  translation 0.023807 -2.22045e-16 -0.00382571
+  rotation 0 1 0 0.767945
+  controller "epuck_go_forward"
+}
+Solid {
+  translation 0 0.2 -0.2
+  rotation 0 -1 0 0.0261799
+  children [
+    DEF BALL_GEOMETRY Shape {
+      appearance PBRAppearance {
+        baseColorMap ImageTexture {
+          url [
+            "textures/red_brick_wall.jpg"
+          ]
+        }
+        roughness 1
+        metalness 0
+      }
+      geometry Sphere {
+        radius 0.05
+        subdivision 2
+      }
+    }
+  ]
+  boundingObject USE BALL_GEOMETRY
+  physics Physics {
+  }
+}
+Solid {
+  translation -0.241567 0.1 -0.188449
+  children [
+    DEF CUBO Shape {
+      appearance PBRAppearance {
+        roughness 1
+        metalness 0
+      }
+      geometry Box {
+        size 0.05 0.05 0.05
+      }
+    }
+  ]
+  name "solid(1)"
+  boundingObject USE CUBO
+  physics Physics {
+  }
+}
+Solid {
+  translation -0.495274 0.025 0.00388046
+  children [
+    DEF PAREDE Shape {
+      appearance PBRAppearance {
+        baseColor 0 0.0666667 1
+        roughness 0.5
+        metalness 0
+      }
+      geometry Box {
+        size 0.01 0.05 0.98
+      }
+    }
+  ]
+  name "solid(3)"
+  boundingObject USE PAREDE
+}
+Solid {
+  translation -0.00122568 0.025 -0.495482
+  rotation 0 1 0 1.57596
+  children [
+    Shape {
+      appearance PBRAppearance {
+        baseColor 0 0.0666667 1
+        roughness 0.5
+        metalness 0
+      }
+      geometry Box {
+        size 0.01 0.05 0.98
+      }
+    }
+    USE PAREDE
+  ]
+  name "solid(6)"
+}
+Solid {
+  translation 0.494371 0.025 -0.00326243
+  children [
+    Shape {
+      appearance PBRAppearance {
+        baseColor 0 0.0666667 1
+        roughness 0.5
+        metalness 0
+      }
+      geometry Box {
+        size 0.01 0.05 0.98
+      }
+    }
+    USE PAREDE
+  ]
+  name "solid(4)"
+}
+Solid {
+  translation -0.00139261 0.025 0.491632
+  rotation 0 1 0 1.5708
+  children [
+    Shape {
+      appearance PBRAppearance {
+        baseColor 0 0.0666667 1
+        roughness 0.5
+        metalness 0
+      }
+      geometry Box {
+        size 0.01 0.05 0.98
+      }
+    }
+    USE PAREDE
+  ]
+  name "solid(5)"
+}
